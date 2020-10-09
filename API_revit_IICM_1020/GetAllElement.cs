@@ -12,6 +12,8 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using Autodesk.Revit.ApplicationServices;
 using API_revit_IICM_1020.Define;
+using API_revit_IICM_1020.UI;
+using API_revit_IICM_1020.Utils;
 
 namespace API_revit_IICM_1020
 {
@@ -24,11 +26,40 @@ namespace API_revit_IICM_1020
             UIDocument uidoc = uiapp.ActiveUIDocument;
             Autodesk.Revit.ApplicationServices.Application app = uiapp.Application;
             Document doc = uidoc.Document;
-            MessageBox.Show("Run", "Message");
-            Reference reference = uidoc.Selection.PickObject(ObjectType.Element);
-            Element element = doc.GetElement(reference);
+            ElementSelector elementSelector = new ElementSelector();
+            elementSelector.SeclectElement(doc, uidoc);
+            Element element = elementSelector.e;
+            SampleCreateSharedParameter.CreateSampleSharedParameters(doc, app);
+
+           // Parameter parameter = element.LookupParameter("Absorptance");
+
+            foreach (Parameter para in element.Parameters)
+            {
+                          
+               // TaskDialog.Show(para.StorageType.ToString(), GetParameterInformation(para, doc)); 
+                if(para.Definition.Name == "Mark")
+                {
+                    try
+                    {
+                        using (Transaction t = new Transaction(doc,"Set Type"))
+                        {
+                            t.Start();
+                            element.get_Parameter(BuiltInParameter.ALL_MODEL_MARK).Set("New mark"); ;
+                            t.Commit();
+                        }
+                    }catch(Exception e)
+                    {
+                        MessageBox.Show(e.ToString(), "Message");
+                    }
+                    
+                }
+                
+            }
+
+
             try {
-                GetElementParameterInformation(doc, element);
+                //TaskDialog.Show("Revit", GetElementParameterInformation(doc, element));
+                
             }
             catch (Exception e)
             {
@@ -39,7 +70,7 @@ namespace API_revit_IICM_1020
             //throw new NotImplementedException();
         }
 
-        void GetElementParameterInformation(Document document, Element element)
+         string GetElementParameterInformation(Document document, Element element)
         {
             // Format the prompt information string
             String prompt = "Show parameters in selected Element: \n\r";
@@ -52,7 +83,9 @@ namespace API_revit_IICM_1020
             }
             WriteLog.Log(st.ToString());
             // Give the user some information
-            TaskDialog.Show("Revit", prompt + st.ToString());
+         
+            return prompt;
+
         }
 
         String GetParameterInformation(Parameter para, Document document)
@@ -104,6 +137,10 @@ namespace API_revit_IICM_1020
             }
 
             return defName + defValue;
+        }
+        void setParameterToElent(Element e)
+        {
+
         }
     }
 }

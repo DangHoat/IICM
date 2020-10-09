@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="RevitAPI">
       <HintPath>C:\Program Files\Autodesk\Revit 2020\RevitAPI.dll</HintPath>
       <Private>False</Private>
@@ -44,6 +48,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
@@ -54,27 +59,43 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Define\WriteLog.cs" />
+    <Compile Include="csAddPanel.cs" />
+    <Compile Include="Model\ParameterModel.cs" />
+    <Compile Include="Utils\ElementSelector.cs" />
+    <Compile Include="Utils\SampleCreateSharedParameter.cs" />
+    <Compile Include="Utils\WriteLog.cs" />
     <Compile Include="GetAllElement.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Model\ExcelModel.cs" />
-    <Compile Include="Model\Floor.cs" />
-    <Compile Include="Model\Shape.cs" />
-    <Compile Include="Model\Wall.cs" />
-    <Compile Include="UI\FormAddValue.cs">
+    <Compile Include="UI\Rules.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\FormAddValue.Designer.cs">
-      <DependentUpon>FormAddValue.cs</DependentUpon>
+    <Compile Include="UI\Rules.Designer.cs">
+      <DependentUpon>Rules.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\FormStart.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\FormStart.Designer.cs">
+      <DependentUpon>FormStart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationExternal.cs" />
     <Compile Include="Utils\ExcelExport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="UI\FormAddValue.resx">
-      <DependentUpon>FormAddValue.cs</DependentUpon>
+    <Folder Include="Define\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="UI\FormStart.resx">
+      <DependentUpon>FormStart.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Rules.resx">
+      <DependentUpon>Rules.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

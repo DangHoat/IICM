@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace API_revit_IICM_1020.UI
 {
-    public partial class FormAddValue : Form
+    public partial class FormStart : Form
     {
-        public FormAddValue()
+        public FormStart()
         {
             InitializeComponent();
         }

@@ -12,10 +12,15 @@ namespace API_revit_IICM_1020.Define
         private string path = "";
         public static void Log(string log)
         {
-            using (StreamWriter sw = new StreamWriter(@"C:\Users\BlueDragon\Desktop\log.txt", true))
+            var CurrentDirectory = Directory.GetCurrentDirectory();
+            string path = "C:\\LogRevit\\Log.txt";
+
+
+            using (StreamWriter sw = new StreamWriter(@path, true))
             {
                 sw.WriteLine(DateTime.Now.ToString() + " : "+ log);
             }
         }
+        
     }
 }
