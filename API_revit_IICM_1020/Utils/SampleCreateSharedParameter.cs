@@ -14,29 +14,44 @@ namespace API_revit_IICM_1020.Utils
     {
        
 
-        public static  void CreateSampleSharedParameters(Document doc, Application app)
+        public static  void CreateSampleSharedParameters(Document doc, Application app,Element element) 
         {
-            Category category = doc.Settings.Categories.get_Item(BuiltInCategory.OST_ColumnAnalytical);
-            CategorySet categorySet = app.Create.NewCategorySet();
-            categorySet.Insert(category);
-
-            string originalFile = app.SharedParametersFilename;
-            string tempFile = @"C:\Users\OAI-IICM\Desktop\APIRevit-C#\Project\IICM\API_revit_IICM_1020\Define\Structural-Parameters.txt";
-
+            string originalFile = "";
             try
             {
+                
+                Category category = element.Category;
+                CategorySet categorySet = app.Create.NewCategorySet();
+                categorySet.Insert(category);
+                InstanceBinding newIB = app.Create.NewInstanceBinding(categorySet);
+
+                originalFile = app.SharedParametersFilename;
+               
+                string tempFile = @"C:\Users\OAI-IICM\Desktop\APIRevit-C#\Project\IICM\API_revit_IICM_1020\Define\Structural-Parameters.txt";
+
+            
                 app.SharedParametersFilename = tempFile;
 
                 DefinitionFile sharedParameterFile = app.OpenSharedParameterFile();
+                
                
-                TaskDialog.Show(sharedParameterFile.ToString(), "mes");
-
                 foreach (DefinitionGroup dg in sharedParameterFile.Groups)
                 {
-                    System.Windows.Forms.MessageBox.Show(dg.ToString(), "Message");
-                    if (dg.Name == "DYNAMO AND ADD-IN")
+                    foreach(ExternalDefinition externalDefinition in dg.Definitions)
                     {
-                        ExternalDefinition externalDefinition = dg.Definitions.get_Item("GROUP 1") as ExternalDefinition;
+
+                        TaskDialog.Show("mess", externalDefinition.Name + "==" + dg.Name);
+                        using (Transaction t = new Transaction(doc))
+                        {
+                            t.Start("Add Shared Parameters");
+                            doc.ParameterBindings.Insert(externalDefinition, newIB, BuiltInParameterGroup.PG_TEXT);
+                            t.Commit();
+                        }
+
+                    }
+                    /*if (dg.Name == "Group1")
+                    {
+                        ExternalDefinition externalDefinition = dg.Definitions.get_Item("Code") as ExternalDefinition;
 
                         using (Transaction t = new Transaction(doc))
                         {
@@ -47,17 +62,58 @@ namespace API_revit_IICM_1020.Utils
                             doc.ParameterBindings.Insert(externalDefinition, newIB, BuiltInParameterGroup.PG_TEXT);
                             t.Commit();
                         }
-                    }
+                    }*/
                 }
             }
             catch (Exception e) {
-                WriteLog.Log(e.ToString());
+                WriteLog.Log(e.ToString()+"\n" + "originalFile"+ originalFile);
             }
             finally
             {
               
                 //reset to original file
+
                 app.SharedParametersFilename = originalFile;
+            }
+        }
+        public static void CreateSampleSharedParameters(Document doc, UIApplication uiApp, Application app, Element element)
+        {
+            try
+            {
+
+
+                Category category = element.Category;
+                CategorySet categorySet = app.Create.NewCategorySet();
+                categorySet.Insert(category);
+                DefinitionFile spFile = uiApp.Application.OpenSharedParameterFile();
+
+                foreach (DefinitionGroup dG in spFile.Groups)
+                {
+                    
+                  
+                    if (dG.Name == "Space")
+                    {
+                        var v = (from ExternalDefinition d in dG.Definitions select d);
+                        using (Transaction t = new Transaction(doc))
+                        {
+                            t.Start("Add Space Shared Parameters");
+                            foreach (ExternalDefinition eD in v)
+                            {
+                                InstanceBinding newIB = uiApp.Application.Create.NewInstanceBinding(categorySet);
+                                doc.ParameterBindings.Insert(eD, newIB, BuiltInParameterGroup.PG_TEXT);
+                            }
+                            t.Commit();
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                WriteLog.Log(e.ToString());
+            }
+            finally
+            {
+
             }
         }
     }

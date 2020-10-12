@@ -29,14 +29,15 @@ namespace API_revit_IICM_1020
             ElementSelector elementSelector = new ElementSelector();
             elementSelector.SeclectElement(doc, uidoc);
             Element element = elementSelector.e;
-            SampleCreateSharedParameter.CreateSampleSharedParameters(doc, app);
+            WriteLog.Log("originalFile " + app.SharedParametersFilename);
+            SampleCreateSharedParameter.CreateSampleSharedParameters(doc,app,element);
 
            // Parameter parameter = element.LookupParameter("Absorptance");
 
-            foreach (Parameter para in element.Parameters)
+           /* foreach (Parameter para in element.Parameters)
             {
                           
-               // TaskDialog.Show(para.StorageType.ToString(), GetParameterInformation(para, doc)); 
+                TaskDialog.Show(para.StorageType.ToString(), GetParameterInformation(para, doc)); 
                 if(para.Definition.Name == "Mark")
                 {
                     try
@@ -44,7 +45,7 @@ namespace API_revit_IICM_1020
                         using (Transaction t = new Transaction(doc,"Set Type"))
                         {
                             t.Start();
-                            element.get_Parameter(BuiltInParameter.ALL_MODEL_MARK).Set("New mark"); ;
+                            para.Set("Mar"); ;
                             t.Commit();
                         }
                     }catch(Exception e)
@@ -65,7 +66,7 @@ namespace API_revit_IICM_1020
             {
                 MessageBox.Show(e.ToString(), "Message");
             }
-            
+            */
             return Result.Succeeded;
             //throw new NotImplementedException();
         }

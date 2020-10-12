@@ -10,16 +10,11 @@ using System.Windows.Forms;
 
 namespace API_revit_IICM_1020.UI
 {
-    public partial class Rules : Form
+    public partial class FormIO : Form
     {
-        public Rules()
+        public FormIO()
         {
             InitializeComponent();
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

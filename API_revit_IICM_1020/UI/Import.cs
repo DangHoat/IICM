@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace API_revit_IICM_1020.UI
 {
-    public partial class FormStart : Form
+    public partial class Import : Form
     {
-        public FormStart()
+        public Import()
         {
             InitializeComponent();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

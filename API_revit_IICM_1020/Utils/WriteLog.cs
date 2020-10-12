@@ -18,7 +18,9 @@ namespace API_revit_IICM_1020.Define
 
             using (StreamWriter sw = new StreamWriter(@path, true))
             {
-                sw.WriteLine(DateTime.Now.ToString() + " : "+ log);
+                sw.WriteLine("\n=======================" + DateTime.Now.ToString() + "======================");
+                sw.WriteLine(log);
+                sw.WriteLine("============================================= ");
             }
         }
         
