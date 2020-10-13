@@ -33,8 +33,6 @@ C:\Users\OAI-IICM\Desktop\API Revit C#\Project\IICM\API_revit_IICM_1020\obj\Debu
 C:\Users\OAI-IICM\Desktop\APIRevit-C#\Project\IICM\API_revit_IICM_1020\bin\Debug\API_revit_IICM_1020.dll
 C:\Users\OAI-IICM\Desktop\APIRevit-C#\Project\IICM\API_revit_IICM_1020\bin\Debug\API_revit_IICM_1020.pdb
 C:\Users\OAI-IICM\Desktop\APIRevit-C#\Project\IICM\API_revit_IICM_1020\bin\Debug\RevitDBAPI.dll
-C:\Users\OAI-IICM\Desktop\APIRevit-C#\Project\IICM\API_revit_IICM_1020\obj\Debug\API_revit_IICM_1020.UI.FormStart.resources
-C:\Users\OAI-IICM\Desktop\APIRevit-C#\Project\IICM\API_revit_IICM_1020\obj\Debug\API_revit_IICM_1020.UI.Rules.resources
 C:\Users\OAI-IICM\Desktop\APIRevit-C#\Project\IICM\API_revit_IICM_1020\obj\Debug\API_revit_IICM_1020.csproj.GenerateResource.cache
 C:\Users\OAI-IICM\Desktop\APIRevit-C#\Project\IICM\API_revit_IICM_1020\obj\Debug\API_revit_IICM_1020.csproj.CoreCompileInputs.cache
 C:\Users\OAI-IICM\Desktop\APIRevit-C#\Project\IICM\API_revit_IICM_1020\obj\Debug\API_revit_IICM_1020.csproj.CopyComplete
@@ -43,3 +41,11 @@ C:\Users\OAI-IICM\Desktop\APIRevit-C#\Project\IICM\API_revit_IICM_1020\obj\Debug
 C:\Users\OAI-IICM\Desktop\APIRevit-C#\Project\IICM\API_revit_IICM_1020\obj\Debug\API_revit_IICM_1020.csprojAssemblyReference.cache
 C:\Users\OAI-IICM\Desktop\APIRevit-C#\Project\IICM\API_revit_IICM_1020\bin\Debug\Newtonsoft.Json.dll
 C:\Users\OAI-IICM\Desktop\APIRevit-C#\Project\IICM\API_revit_IICM_1020\bin\Debug\Newtonsoft.Json.xml
+C:\Users\OAI-IICM\Desktop\APIRevit-C#\Project\IICM\API_revit_IICM_1020\bin\Debug\Microsoft.Dynamic.dll
+C:\Users\OAI-IICM\Desktop\APIRevit-C#\Project\IICM\API_revit_IICM_1020\bin\Debug\Microsoft.Scripting.Metadata.dll
+C:\Users\OAI-IICM\Desktop\APIRevit-C#\Project\IICM\API_revit_IICM_1020\bin\Debug\IronPython.xml
+C:\Users\OAI-IICM\Desktop\APIRevit-C#\Project\IICM\API_revit_IICM_1020\bin\Debug\Microsoft.Scripting.xml
+C:\Users\OAI-IICM\Desktop\APIRevit-C#\Project\IICM\API_revit_IICM_1020\bin\Debug\Microsoft.Dynamic.xml
+C:\Users\OAI-IICM\Desktop\APIRevit-C#\Project\IICM\API_revit_IICM_1020\bin\Debug\Microsoft.Scripting.Metadata.xml
+C:\Users\OAI-IICM\Desktop\APIRevit-C#\Project\IICM\API_revit_IICM_1020\obj\Debug\API_revit_IICM_1020.UI.FormIO.resources
+C:\Users\OAI-IICM\Desktop\APIRevit-C#\Project\IICM\API_revit_IICM_1020\obj\Debug\API_revit_IICM_1020.UI.Import.resources

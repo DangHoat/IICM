@@ -14,6 +14,7 @@ using Autodesk.Revit.ApplicationServices;
 using API_revit_IICM_1020.Define;
 using API_revit_IICM_1020.UI;
 using API_revit_IICM_1020.Utils;
+using API_revit_IICM_1020.Model;
 
 namespace API_revit_IICM_1020
 {
@@ -21,6 +22,7 @@ namespace API_revit_IICM_1020
     [Regeneration(RegenerationOption.Manual)]
     class GetAllElement : IExternalCommand
     {
+        List<ExcelModel> listParamrter = new List<ExcelModel>();
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements){
             UIApplication uiapp = commandData.Application;
             UIDocument uidoc = uiapp.ActiveUIDocument;
@@ -29,49 +31,45 @@ namespace API_revit_IICM_1020
             ElementSelector elementSelector = new ElementSelector();
             elementSelector.SeclectElement(doc, uidoc);
             Element element = elementSelector.e;
-            WriteLog.Log("originalFile " + app.SharedParametersFilename);
-            SampleCreateSharedParameter.CreateSampleSharedParameters(doc,app,element);
+            // Parameter parameter = element.LookupParameter("Absorptance");
 
-           // Parameter parameter = element.LookupParameter("Absorptance");
-
-           /* foreach (Parameter para in element.Parameters)
+            foreach (Parameter para in element.Parameters)
             {
-                          
-                TaskDialog.Show(para.StorageType.ToString(), GetParameterInformation(para, doc)); 
-                if(para.Definition.Name == "Mark")
+                GetParameterInformation(para, doc);
+                //MessageBox.Show(GetParameterInformation(para, doc), GetParameterInformation(para, doc));
+
+               /* if (para.Definition.Name == "Mark")
                 {
                     try
                     {
-                        using (Transaction t = new Transaction(doc,"Set Type"))
+                        using (Transaction t = new Transaction(doc, "Set Type"))
                         {
                             t.Start();
                             para.Set("Mar"); ;
                             t.Commit();
                         }
-                    }catch(Exception e)
+                    }
+                    catch (Exception e)
                     {
                         MessageBox.Show(e.ToString(), "Message");
                     }
-                    
-                }
-                
-            }
 
+                }*/
 
-            try {
-                //TaskDialog.Show("Revit", GetElementParameterInformation(doc, element));
-                
             }
-            catch (Exception e)
+            FormIO formIO = new FormIO();
+            formIO.Show();
+           
+            /*foreach(KeyValuePair<string,string> item in listParamrter)
             {
-                MessageBox.Show(e.ToString(), "Message");
-            }
-            */
+                MessageBox.Show(item.Key, item.Value);
+            }*/
+
             return Result.Succeeded;
             //throw new NotImplementedException();
         }
 
-         string GetElementParameterInformation(Document document, Element element)
+         /*string GetElementParameterInformation(Document document, Element element)
         {
             // Format the prompt information string
             String prompt = "Show parameters in selected Element: \n\r";
@@ -87,9 +85,9 @@ namespace API_revit_IICM_1020
          
             return prompt;
 
-        }
+        }*/
 
-        String GetParameterInformation(Parameter para, Document document)
+        void GetParameterInformation(Parameter para, Document document)
         {
             string defName = para.Definition.Name + "\t : ";
             string defValue = string.Empty;
@@ -136,8 +134,10 @@ namespace API_revit_IICM_1020
                     defValue = "Unexposed parameter.";
                     break;
             }
+            
+            listParamrter.Add(new ExcelModel(defName,defValue, para.StorageType.ToString()));
 
-            return defName + defValue;
+           // return defName + defValue;
         }
         void setParameterToElent(Element e)
         {

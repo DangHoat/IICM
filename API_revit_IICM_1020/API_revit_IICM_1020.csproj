@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="csAddPanel.cs" />
+    <Compile Include="InsertShareParameter.cs" />
     <Compile Include="Model\ParameterModel.cs" />
     <Compile Include="Utils\ElementSelector.cs" />
     <Compile Include="Utils\SampleCreateSharedParameter.cs" />
@@ -75,17 +76,17 @@
     <Compile Include="GetAllElement.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Model\ExcelModel.cs" />
-    <Compile Include="UI\Rules.cs">
+    <Compile Include="UI\Import.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Rules.Designer.cs">
-      <DependentUpon>Rules.cs</DependentUpon>
+    <Compile Include="UI\Import.Designer.cs">
+      <DependentUpon>Import.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\FormStart.cs">
+    <Compile Include="UI\FormIO.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\FormStart.Designer.cs">
-      <DependentUpon>FormStart.cs</DependentUpon>
+    <Compile Include="UI\FormIO.Designer.cs">
+      <DependentUpon>FormIO.cs</DependentUpon>
     </Compile>
     <Compile Include="ApplicationExternal.cs" />
     <Compile Include="Utils\ExcelExport.cs" />
@@ -95,11 +96,11 @@
     <Folder Include="Define\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="UI\FormStart.resx">
-      <DependentUpon>FormStart.cs</DependentUpon>
+    <EmbeddedResource Include="UI\FormIO.resx">
+      <DependentUpon>FormIO.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Rules.resx">
-      <DependentUpon>Rules.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Import.resx">
+      <DependentUpon>Import.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

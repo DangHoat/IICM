@@ -40,11 +40,11 @@ namespace API_revit_IICM_1020.Utils
                     foreach(ExternalDefinition externalDefinition in dg.Definitions)
                     {
 
-                        TaskDialog.Show("mess", externalDefinition.Name + "==" + dg.Name);
+                        /*TaskDialog.Show("mess", externalDefinition.Name + "==" + dg.Name);*/
                         using (Transaction t = new Transaction(doc))
                         {
                             t.Start("Add Shared Parameters");
-                            doc.ParameterBindings.Insert(externalDefinition, newIB, BuiltInParameterGroup.PG_TEXT);
+                            doc.ParameterBindings.Insert(externalDefinition, newIB);
                             t.Commit();
                         }
 
