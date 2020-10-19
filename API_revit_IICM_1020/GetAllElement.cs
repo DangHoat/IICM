@@ -20,9 +20,11 @@ namespace API_revit_IICM_1020
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
+    
     class GetAllElement : IExternalCommand
     {
-        List<ExcelModel> listParamrter = new List<ExcelModel>();
+        int id = 0;
+        List<ParameterModel> listParamrter = new List<ParameterModel>();
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements){
             UIApplication uiapp = commandData.Application;
             UIDocument uidoc = uiapp.ActiveUIDocument;
@@ -36,35 +38,20 @@ namespace API_revit_IICM_1020
             foreach (Parameter para in element.Parameters)
             {
                 GetParameterInformation(para, doc);
-                //MessageBox.Show(GetParameterInformation(para, doc), GetParameterInformation(para, doc));
-
-               /* if (para.Definition.Name == "Mark")
-                {
-                    try
-                    {
-                        using (Transaction t = new Transaction(doc, "Set Type"))
-                        {
-                            t.Start();
-                            para.Set("Mar"); ;
-                            t.Commit();
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        MessageBox.Show(e.ToString(), "Message");
-                    }
-
-                }*/
-
             }
-            FormIO formIO = new FormIO();
-            formIO.Show();
-           
-            /*foreach(KeyValuePair<string,string> item in listParamrter)
-            {
-                MessageBox.Show(item.Key, item.Value);
-            }*/
+            ///show dialog update param
+            ///
 
+            using (FormIO formIO = new FormIO(listParamrter))
+            {
+                 DialogResult dr = formIO.ShowDialog();
+                if(dr  == DialogResult.OK)
+                {
+                    //do update
+                   
+                }
+            }
+                
             return Result.Succeeded;
             //throw new NotImplementedException();
         }
@@ -89,7 +76,7 @@ namespace API_revit_IICM_1020
 
         void GetParameterInformation(Parameter para, Document document)
         {
-            string defName = para.Definition.Name + "\t : ";
+            string defName = para.Definition.Name;
             string defValue = string.Empty;
             // Use different method to get parameter data according to the storage type
             switch (para.StorageType)
@@ -135,12 +122,25 @@ namespace API_revit_IICM_1020
                     break;
             }
             
-            listParamrter.Add(new ExcelModel(defName,defValue, para.StorageType.ToString()));
+            listParamrter.Add(new ParameterModel(++id,defName,defValue, para.StorageType.ToString(),para));
 
            // return defName + defValue;
         }
-        void setParameterToElent(Element e)
+        void setParameterToElent(Parameter parameter,Document doc,string value)
         {
+            try
+            {
+                using (Transaction t = new Transaction(doc, "Set Type"))
+                {
+                    t.Start();
+                    parameter.Set(value); 
+                    t.Commit();
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString(), "Message");
+            }
 
         }
     }

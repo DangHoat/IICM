@@ -1,9 +1,13 @@
 ﻿using API_revit_IICM_1020.Model;
+using DocumentFormat.OpenXml.Office.CoverPageProps;
+using Newtonsoft.Json;
+using sun.tools.asm;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,14 +17,17 @@ namespace API_revit_IICM_1020.UI
 {
     public partial class FormIO : Form
     {
-        private List<ExcelModel> listParamrter;
-        public List<ExcelModel> listParam {
-                get{
-                    if (this.listParamrter == null) return new List<ExcelModel> ();
-                    return this.listParamrter;
+        Button btn ;
+        int id;
+        private List<ParameterModel> listParamrters;
+        private ParameterModel temp;
+        public List<ParameterModel> VALUE {
+            get{
+                if (this.listParamrters == null) return new List<ParameterModel> ();
+                return this.listParamrters;
                 }
             set {
-                this.listParamrter = value;
+                this.listParamrters = value;
             }
            
         }
@@ -29,59 +36,113 @@ namespace API_revit_IICM_1020.UI
         {
             InitializeComponent(); 
         }
-       public FormIO (List<ExcelModel> excelModels)
+       public FormIO (List<ParameterModel> excelModels)
         {
-            this.listParamrter = excelModels;
+            this.listParamrters = excelModels;
             InitializeComponent();
-        }
-        private void FormIO_Init()
-        {
-            
-        }
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnAccept_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void box1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void FormIO_Load(object sender, EventArgs e)
-        {
             MinimizeBox = false;
             MaximizeBox = false;
-            listView1.View = View.Details;
-            listView1.GridLines = true;
-            listView1.FullRowSelect = true;
-            //Thêm Item vào listview
-            string[] arr = new string[2];
+            listParameter.View = View.Details;
+            listParameter.GridLines = true;
+            listParameter.FullRowSelect = true;
+            
+            string[] arr = new string[4];
             ListViewItem itm;
-            foreach (ExcelModel item in this.listParamrter)
+            foreach (ParameterModel item in this.listParamrters)
             {
                 arr[0] = item.NAME;
                 arr[1] = item.VALUE;
+                arr[2] = Convert.ToString(item.ID);
+                arr[3] = item.TYPE;
                 itm = new ListViewItem(arr);
-                listView1.Items.Add(itm);
+               // comboBoxParam.Items.Add(arr[0]);
+                listParameter.Items.Add(itm);
             }
         }
+        
 
-       
+        private void listParameter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listParameter.SelectedItems.Count == 0)
+                return;
+            //get selected row
+            ListViewItem item = listParameter.Items[listParameter.SelectedIndices[0]];
+            //fill the text boxes
+            comboBoxParam.Text = item.SubItems[0].Text;
+            textBoxParam.Text = item.SubItems[1].Text;
+            id = Convert.ToInt32(item.SubItems[2].Text);
+            if (!btnUpdate.Enabled) {
+                btnUpdate.Enabled = true;
+            }
+            
+            btn = new Button();
+            btn.Size = new Size(textBoxParam.ClientSize.Height - 3, textBoxParam.ClientSize.Height - 3);
+            btn.Location = new Point(textBoxParam.ClientSize.Width - btn.Width, 2);
+            btn.Cursor = Cursors.Default;
+            btn.Text = "...";
+            btn.Click += btn_Click;
+            textBoxParam.Controls.Add(btn);
+
+        }  
+        private void btn_Click(object sender, EventArgs e)
+        {
+            using (StreamReader r = new StreamReader(@"C:\Users\OAI-IICM\Desktop\APIRevit-C#\dutoan.json"))
+            {
+                string json = r.ReadToEnd();
+                using (var treeViewDialog = new TreeViewDialog(json))
+                {
+                    treeViewDialog.Text = comboBoxParam.Text;
+                    DialogResult dr = treeViewDialog.ShowDialog(this);
+                    if (dr == DialogResult.OK)
+                    {
+                        textBoxParam.Text = treeViewDialog.DLR;
+                    }
+                    
+                }
+            }
+          
+           
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            //Update by ID
+            listParamrters.FirstOrDefault(p => p.ID == id).VALUE = textBoxParam.Text;
+            UpdateListView();
+        }
+
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            //Return data update
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
+        private void btnCancel1_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
+
+        }
+
+        private void textBoxParam_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+        private void UpdateListView()
+        {
+            listParameter.Items.Clear();
+            string[] arr = new string[4];
+            ListViewItem itm;
+            foreach (ParameterModel item in this.listParamrters)
+            {
+                arr[0] = item.NAME;
+                arr[1] = item.VALUE;
+                arr[2] = Convert.ToString(item.ID);
+                itm = new ListViewItem(arr);
+                // comboBoxParam.Items.Add(arr[0]);
+                listParameter.Items.Add(itm);
+            }
+        }
     }
 }
