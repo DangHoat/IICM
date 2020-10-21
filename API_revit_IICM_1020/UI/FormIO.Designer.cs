@@ -37,8 +37,8 @@
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnUpdate = new System.Windows.Forms.Button();
-            this.comboBoxParam = new System.Windows.Forms.ComboBox();
-            this.textBoxParam = new System.Windows.Forms.TextBox();
+            this.textBoxParam = new System.Windows.Forms.ComboBox();
+            this.comboBoxParam = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnCancel1
@@ -104,7 +104,7 @@
             // columnHeader2
             // 
             this.columnHeader2.Text = "Value";
-            this.columnHeader2.Width = 409;
+            this.columnHeader2.Width = 411;
             // 
             // btnUpdate
             // 
@@ -117,31 +117,28 @@
             this.btnUpdate.UseVisualStyleBackColor = true;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
-            // comboBoxParam
-            // 
-            this.comboBoxParam.Cursor = System.Windows.Forms.Cursors.Default;
-            this.comboBoxParam.DropDownWidth = 100;
-            this.comboBoxParam.Enabled = false;
-            this.comboBoxParam.FormattingEnabled = true;
-            this.comboBoxParam.Location = new System.Drawing.Point(40, 56);
-            this.comboBoxParam.Name = "comboBoxParam";
-            this.comboBoxParam.Size = new System.Drawing.Size(233, 21);
-            this.comboBoxParam.TabIndex = 9;
-            // 
             // textBoxParam
             // 
-            this.textBoxParam.Location = new System.Drawing.Point(378, 57);
+            this.textBoxParam.FormattingEnabled = true;
+            this.textBoxParam.Location = new System.Drawing.Point(378, 56);
             this.textBoxParam.Name = "textBoxParam";
-            this.textBoxParam.Size = new System.Drawing.Size(233, 20);
+            this.textBoxParam.Size = new System.Drawing.Size(233, 21);
             this.textBoxParam.TabIndex = 10;
-            this.textBoxParam.TextChanged += new System.EventHandler(this.textBoxParam_TextChanged);
+            this.textBoxParam.SelectedIndexChanged += new System.EventHandler(this.textBoxParam_SelectedIndexChanged);
+            // 
+            // comboBoxParam
+            // 
+            this.comboBoxParam.Location = new System.Drawing.Point(40, 57);
+            this.comboBoxParam.Name = "comboBoxParam";
+            this.comboBoxParam.Size = new System.Drawing.Size(233, 20);
+            this.comboBoxParam.TabIndex = 11;
             // 
             // FormIO
             // 
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(654, 458);
-            this.Controls.Add(this.textBoxParam);
             this.Controls.Add(this.comboBoxParam);
+            this.Controls.Add(this.textBoxParam);
             this.Controls.Add(this.btnUpdate);
             this.Controls.Add(this.listParameter);
             this.Controls.Add(this.label3);
@@ -181,7 +178,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.Button btnUpdate;
-        private System.Windows.Forms.ComboBox comboBoxParam;
-        private System.Windows.Forms.TextBox textBoxParam;
+        private System.Windows.Forms.ComboBox textBoxParam;
+        private System.Windows.Forms.TextBox comboBoxParam;
     }
 }

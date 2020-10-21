@@ -19,6 +19,8 @@ namespace API_revit_IICM_1020.UI
     {
         Button btn ;
         int id;
+        string json;
+        List<string> comboSource = new List<string>();
         private List<ParameterModel> listParamrters;
         private ParameterModel temp;
         public List<ParameterModel> VALUE {
@@ -37,7 +39,7 @@ namespace API_revit_IICM_1020.UI
             InitializeComponent(); 
         }
        public FormIO (List<ParameterModel> excelModels)
-        {
+        {   
             this.listParamrters = excelModels;
             InitializeComponent();
             MinimizeBox = false;
@@ -45,7 +47,24 @@ namespace API_revit_IICM_1020.UI
             listParameter.View = View.Details;
             listParameter.GridLines = true;
             listParameter.FullRowSelect = true;
+          
+            //textBoxParam.DropDownStyle = ComboBoxStyle.Simple;
             
+            getJson(@"C:\Users\OAI-IICM\Desktop\APIRevit-C#\dutoan.json");
+
+            dynamic jsonObj = JsonConvert.DeserializeObject(json);
+            foreach (var obj in jsonObj.data)
+            {
+                foreach (var group in obj.value)
+                {
+                    foreach (var member in group.member)
+                    {
+                        comboSource.Add(Convert.ToString( member));
+                    }
+                }
+            }
+            textBoxParam.DataSource = new BindingSource(comboSource, null);
+           
             string[] arr = new string[4];
             ListViewItem itm;
             foreach (ParameterModel item in this.listParamrters)
@@ -68,9 +87,16 @@ namespace API_revit_IICM_1020.UI
             //get selected row
             ListViewItem item = listParameter.Items[listParameter.SelectedIndices[0]];
             //fill the text boxes
-            comboBoxParam.Text = item.SubItems[0].Text;
-            textBoxParam.Text = item.SubItems[1].Text;
-            id = Convert.ToInt32(item.SubItems[2].Text);
+            try
+            {
+                comboBoxParam.Text = item.SubItems[0].Text;
+                textBoxParam.Text = item.SubItems[1].Text;
+                id = int.Parse(item.SubItems[2].Text);
+            }
+            catch (FormatException ex)
+            {
+
+            }
             if (!btnUpdate.Enabled) {
                 btnUpdate.Enabled = true;
             }
@@ -86,22 +112,17 @@ namespace API_revit_IICM_1020.UI
         }  
         private void btn_Click(object sender, EventArgs e)
         {
-            using (StreamReader r = new StreamReader(@"C:\Users\OAI-IICM\Desktop\APIRevit-C#\dutoan.json"))
+            using (var treeViewDialog = new TreeViewDialog(json))
             {
-                string json = r.ReadToEnd();
-                using (var treeViewDialog = new TreeViewDialog(json))
+                treeViewDialog.Text = comboBoxParam.Text;
+                DialogResult dr = treeViewDialog.ShowDialog(this);
+                if (dr == DialogResult.OK)
                 {
-                    treeViewDialog.Text = comboBoxParam.Text;
-                    DialogResult dr = treeViewDialog.ShowDialog(this);
-                    if (dr == DialogResult.OK)
-                    {
-                        textBoxParam.Text = treeViewDialog.DLR;
-                    }
-                    
+                    textBoxParam.Text = treeViewDialog.DLR;
                 }
+
             }
-          
-           
+
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
@@ -142,6 +163,19 @@ namespace API_revit_IICM_1020.UI
                 itm = new ListViewItem(arr);
                 // comboBoxParam.Items.Add(arr[0]);
                 listParameter.Items.Add(itm);
+            }
+        }
+
+        private void textBoxParam_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+        void getJson(string link)
+        {
+            using (StreamReader r = new StreamReader(link))
+            {
+                 this.json = r.ReadToEnd();
+               
             }
         }
     }

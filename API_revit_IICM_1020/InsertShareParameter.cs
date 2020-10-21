@@ -23,9 +23,9 @@ namespace API_revit_IICM_1020
             ElementSelector elementSelector = new ElementSelector();
             elementSelector.SeclectElement(doc, uidoc);
             Element element = elementSelector.e;
-            SampleCreateSharedParameter sampleCreateSharedParameter = new SampleCreateSharedParameter();
+            SampleCreateSharedParameter sampleCreateSharedParameter = new SampleCreateSharedParameter(doc, app);
             sampleCreateSharedParameter.LINK = @"C:\Users\OAI-IICM\Desktop\APIRevit-C#\Project\IICM\API_revit_IICM_1020\Define\Structural-Parameters.txt"; 
-            sampleCreateSharedParameter.CreateSampleSharedParameters(doc, app, element);
+            sampleCreateSharedParameter.CreateSampleSharedParameters(element);
             return Result.Succeeded;
         }
     }

@@ -172,10 +172,11 @@
       <DependentUpon>TreeViewDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils\ElementSelector.cs" />
+    <Compile Include="Utils\ParameterProcess.cs" />
     <Compile Include="Utils\SampleCreateSharedParameter.cs" />
     <Compile Include="Utils\WriteLog.cs" />
-    <Compile Include="GetAllElement.cs" />
-    <Compile Include="Main.cs" />
+    <Compile Include="SeclectOneElementAndUpdate.cs" />
+    <Compile Include="SelectManyElements.cs" />
     <Compile Include="Model\ParameterModel.cs" />
     <Compile Include="UI\Import.cs">
       <SubType>Form</SubType>
